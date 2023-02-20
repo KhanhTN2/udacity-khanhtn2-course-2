@@ -34,7 +34,7 @@ import path from 'path';
   /**************************************************************************** */
 
   //Temporary folder
-  const out_absolute_path = __dirname + "/util/tmp";
+  const TMP_FOLDER = __dirname + "/util/tmp";
 
   app.get("/filteredimage/", async (req, res) => {
     let { image_url } = req.query;
@@ -44,16 +44,13 @@ import path from 'path';
         .send(`image_url is required`);
     }
     //    2. call filterImageFromURL(image_url) to filter the image
-    let filteredpath: string = await filterImageFromURL(image_url);
-
+    let filteredpath = await filterImageFromURL(image_url);
     //    3. send the resulting file in the response
     res.status(200).sendFile(filteredpath);
-
     //    4. deletes any files on the server on finish of the response
     req.on("close", function (filteredpath: string) {
-      deleteLocalFiles(fs.readdirSync(out_absolute_path).map(fileName => { return path.resolve(out_absolute_path, fileName) }));
+      deleteLocalFiles(fs.readdirSync(TMP_FOLDER).map(fileName => { return path.resolve(TMP_FOLDER, fileName) }));
     });
-
   });
 
   //! END @TODO1
