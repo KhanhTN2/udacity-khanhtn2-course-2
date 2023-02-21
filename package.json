@@ -1,6 +1,10 @@
 {
   "name": "udacity-c2-image-filter",
   "version": "1.0.0",
+  "engines" : { 
+    "npm" : ">=8 <20",
+    "node" : ">=14"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
