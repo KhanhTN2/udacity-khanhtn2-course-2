@@ -44,13 +44,17 @@ import path from 'path';
         .send(`image_url is required`);
     }
     //    2. call filterImageFromURL(image_url) to filter the image
-    let filteredpath = await filterImageFromURL(image_url);
-    //    3. send the resulting file in the response
-    res.status(200).sendFile(filteredpath);
-    //    4. deletes any files on the server on finish of the response
-    req.on("close", function (filteredpath: string) {
-      deleteLocalFiles(fs.readdirSync(TMP_FOLDER).map(fileName => { return path.resolve(TMP_FOLDER, fileName) }));
-    });
+    try {
+      let filteredpath = await filterImageFromURL(image_url);
+      //    3. send the resulting file in the response
+      res.status(200).sendFile(filteredpath);
+      //    4. deletes any files on the server on finish of the response
+      req.on("close", function (filteredpath: string) {
+        deleteLocalFiles(fs.readdirSync(TMP_FOLDER).map(fileName => { return path.resolve(TMP_FOLDER, fileName) }));
+      });
+    } catch (error) {
+      res.status(422).send("Something went wrong with URL:" + image_url);
+    }
   });
 
   //! END @TODO1
