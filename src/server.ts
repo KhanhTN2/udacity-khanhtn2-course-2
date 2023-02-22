@@ -36,8 +36,8 @@ import path from 'path';
   //Temporary folder
   const TMP_FOLDER = __dirname + "/util/tmp";
 
-  app.get("/filteredimage/", async (req, res) => {
-    let { image_url } = req.query;
+  app.get("/filteredimage/", async (req:express.Request, res:express.Response) => {
+    let { image_url } : { image_url:string} = req.query;
     //    1. validate the image_url query
     if (!image_url) {
       return res.status(400)
