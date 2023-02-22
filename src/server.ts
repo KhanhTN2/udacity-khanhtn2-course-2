@@ -45,7 +45,7 @@ import path from 'path';
     }
     //    2. call filterImageFromURL(image_url) to filter the image
     try {
-      let filteredpath = await filterImageFromURL(image_url);
+      let filteredpath:string = await filterImageFromURL(image_url);
       //    3. send the resulting file in the response
       res.status(200).sendFile(filteredpath);
       //    4. deletes any files on the server on finish of the response
